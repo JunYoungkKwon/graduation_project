@@ -10,19 +10,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven{
-            url "https://maven.google.com"
-        }
-        /*카카오*/
-        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/'}
-    }
-}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

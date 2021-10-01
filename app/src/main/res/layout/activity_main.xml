@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    tools:context=".MainActivity"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    >
 
-    <Button
-        android:id="@+id/btn_custom_login"
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="카카오 로그인" />
+        android:orientation="vertical"
+        android:layout_weight="1">
 
-    <com.kakao.usermgmt.LoginButton
-        android:id="@+id/btn_kakao_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btn_custom_login_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="카카오 로그아웃" />
-
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kakao 로그인"
+            android:textStyle="bold"
+            />
+        <ImageButton
+            android:id="@+id/btn_login"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/kakao_login_medium_narrow"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="kakao 로그아웃"
+            android:textStyle="bold"
+            />
+        <ImageButton
+            android:id="@+id/btn_login_out"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/kakao_login_medium_narrow"
+            />
+    </LinearLayout>
 
 </LinearLayout>
