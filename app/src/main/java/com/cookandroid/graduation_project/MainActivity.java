@@ -2,6 +2,7 @@ package com.cookandroid.graduation_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -23,16 +24,20 @@ import java.security.NoSuchAlgorithmException;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG="사용자";
     private ImageButton btn_login, btn_login_out;
+    private Button test_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(this, ClassifierActivity.class);
+
         // Log.d("GET_KEYHASH",getKeyHash());
 
         btn_login = findViewById(R.id.btn_login);
         btn_login_out = findViewById(R.id.btn_login_out);
+        test_btn = findViewById(R.id.test_btn);
 
         btn_login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return null;
                 });
+            }
+        });
+
+        test_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivity(intent);
             }
         });
     }
