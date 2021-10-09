@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:background="@drawable/gradiant_background"
+    tools:context=".HomeActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/CustomButton.gray"
+            android:id="@+id/home_mask_recog_btn"
+            android:text="마스크 인식"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/CustomButton.gray"
+            android:id="@+id/home_covid_info_btn"
+            android:text="코로나 정보"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/CustomButton.gray"
+            android:id="@+id/home_report_list_btn"
+            android:text="신고 리스트"/>
+    </LinearLayout>
+
+</LinearLayout>
