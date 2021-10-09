@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_background"
+    tools:context=".CovidInfoActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="left"
+                style="@style/CustomBox.gray">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="900"
+                    android:textSize="22sp"
+                    android:textColor="@color/navy"
+                    android:text="누적 확진 환자"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="500"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/navy"
+                    android:text="312,234"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:text="격리해제"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="274,123"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:text="치료 중"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="24,123"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:text="사망"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="1,326"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:gravity="left"
+                style="@style/CustomBox.gray">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="900"
+                    android:textSize="22sp"
+                    android:textColor="@color/navy"
+                    android:text="오늘 확진자"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="500"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/navy"
+                    android:text="2,234"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="24sp"
+                        android:textColor="@color/navy"
+                        android:text="국내발생"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="2,123"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="24sp"
+                        android:textColor="@color/navy"
+                        android:text="해외유입"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="23"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:text="1차 접종"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="39,543,631"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="(76%)"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="left"
+                    style="@style/CustomBox.gray">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="900"
+                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:text="접종완료"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="24,543,631"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/navy"
+                        android:text="(49%)"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@android:drawable/ic_menu_mapmode"
+                android:padding="15dp"
+                android:gravity="left"
+                style="@style/CustomBox.gray"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#5770BA"
+                android:textSize="18sp"
+                android:textColor="@color/navy"
+                android:text="질병관리본부 홈페이지로 이동"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
