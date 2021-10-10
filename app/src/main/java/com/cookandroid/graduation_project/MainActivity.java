@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         btn_login = findViewById(R.id.btn_login);
         btn_login_out = findViewById(R.id.btn_login_out);
-        test_btn = findViewById(R.id.test_btn);
 
         btn_login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -71,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         btn_login_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 UserApiClient.getInstance().logout(error -> {
                     if (error != null) {
                         Log.e(TAG, "로그아웃 실패, SDK에서 토큰 삭제됨", error);
@@ -83,13 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     return null;
                 });
             }
-        });
-
-        test_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                startActivity(intent);
-            }
+        }); */
+        //테스트용으로 만듦!!!
+        btn_login_out.setOnClickListener(view -> {
+            startActivity(new Intent(this, HomeActivity.class));
         });
     }
 
