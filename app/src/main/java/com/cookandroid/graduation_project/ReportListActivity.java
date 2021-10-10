@@ -1,4 +1,4 @@
-package com.example.maskreport;
+package com.cookandroid.graduation_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

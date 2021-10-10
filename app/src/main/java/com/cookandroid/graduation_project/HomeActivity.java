@@ -1,4 +1,4 @@
-package com.example.maskreport;
+package com.cookandroid.graduation_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +18,7 @@ public class HomeActivity extends AppCompatActivity {
         Button reportBtn = findViewById(R.id.home_report_list_btn);
 
         recogBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, MaskRecognizerActivity.class));
+            startActivity(new Intent(this, ClassifierActivity.class));
         });
 
         covidBtn.setOnClickListener(view -> {
