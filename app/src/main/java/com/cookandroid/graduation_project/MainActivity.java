@@ -1,4 +1,5 @@
 package com.cookandroid.graduation_project;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -12,19 +13,36 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.Account;
 import com.kakao.sdk.user.model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG="사용자";
     private ImageButton btn_login, btn_login_out;
     private Button test_btn;
+
+    private DatabaseReference mDatabase;
+    Button save, read;
+    EditText email, name, id;
+    TextView data;
+    int i = 1; //pk
 
 
     @Override
@@ -90,6 +108,38 @@ public class MainActivity extends AppCompatActivity {
         btn_login_out.setOnClickListener(view -> {
             startActivity(new Intent(this, HomeActivity.class));
         });
+
+
+        //firebase test 부분
+        mDatabase = FirebaseDatabase.getInstance().getReference(); //DatabaseReference의 인스턴스
+
+        save = findViewById(R.id.submit);
+        read = findViewById(R.id.read);
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        id = findViewById(R.id.id);
+        data = findViewById(R.id.data);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String getUserName = name.getText().toString();
+                String getUserEmail = email.getText().toString();
+
+                HashMap result = new HashMap<>();
+                result.put("name", getUserName); //키, 값
+                result.put("email", getUserEmail);
+
+                writeUser(Integer.toString(i++), getUserName, getUserEmail);
+            }
+        });
+
+        read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                readUser(id.getText().toString());
+            }
+        });
     }
 
     // 키해시 얻기
@@ -110,5 +160,41 @@ public class MainActivity extends AppCompatActivity {
             Log.w("getPackageInfo", "Unable to getPackageInfo");
         }
         return null;
+    }
+
+    //firebase 데이터 읽고 쓰기
+    private void writeUser(String userId, String name, String email) {
+        UserData user =  new UserData(name,email);
+
+        //데이터 저장
+        mDatabase.child("users").child(userId).setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() { //데이터베이스에 넘어간 이후 처리
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void readUser(String userId) {
+        //데이터 읽기
+        mDatabase.child("users").child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserData user = snapshot.getValue(UserData.class);
+                data.setText("이름: " + user.name + " 이메일: " + user.email);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
+                Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
