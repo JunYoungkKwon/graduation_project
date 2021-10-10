@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ClassifierActivity.class);
 
-        // Log.d("GET_KEYHASH",getKeyHash());
-
         btn_login = findViewById(R.id.btn_login);
         btn_login_out = findViewById(R.id.btn_login_out);
 
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 키해시 얻기
-    public String getKeyHash(){
+    /*(public String getKeyHash(MainActivity mainActivity){
         try{
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(),PackageManager.GET_SIGNATURES);
             if(packageInfo == null) return null;
@@ -110,5 +108,5 @@ public class MainActivity extends AppCompatActivity {
             Log.w("getPackageInfo", "Unable to getPackageInfo");
         }
         return null;
-    }
+    }*/
 }
