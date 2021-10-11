@@ -2,16 +2,9 @@ package com.cookandroid.graduation_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,88 +18,96 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+=======
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.user.UserApi;
+>>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 import com.kakao.sdk.user.UserApiClient;
-import com.kakao.sdk.user.model.Account;
 import com.kakao.sdk.user.model.User;
 
+<<<<<<< HEAD
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+=======
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
+>>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="사용자";
-    private ImageButton btn_login, btn_login_out;
-    private Button test_btn;
 
+<<<<<<< HEAD
     private DatabaseReference mDatabase;
     Button save, read;
     EditText email, name, id;
     TextView data;
     int i = 1; //pk
 
+=======
+    private View loginButton, logoutButton;
+    private TextView nickName;
+>>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, ClassifierActivity.class);
+        loginButton = findViewById(R.id.login);
+        logoutButton = findViewById(R.id.logout);
+        nickName = findViewById(R.id.nickname);
 
-        // Log.d("GET_KEYHASH",getKeyHash());
-
-        btn_login = findViewById(R.id.btn_login);
-        btn_login_out = findViewById(R.id.btn_login_out);
-
-        btn_login.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this,(oAuthToken, error) -> {
-                    if (error != null) {
-                        Log.e(TAG, "로그인 실패", error);
-                    } else if (oAuthToken != null) {
-                        Log.i(TAG, "로그인 성공(토큰) : " + oAuthToken.getAccessToken());
-
-                        UserApiClient.getInstance().me((user, meError) -> {
-                            if (meError != null) {
-                                Log.e(TAG, "사용자 정보 요청 실패", meError);
-                            } else {
-                                System.out.println("로그인 완료");
-                                Log.i(TAG, user.toString());
-                                {
-                                    Log.i(TAG, "사용자 정보 요청 성공" +
-                                            "\n회원번호: "+user.getId() +
-                                            "\n이메일: "+user.getKakaoAccount().getEmail());
-                                }
-                                Account user1 = user.getKakaoAccount();
-                                System.out.println("사용자 계정" + user1);
+            public void onClick(View view) {
+                if(UserApiClient.getInstance().isKakaoTalkLoginAvailable(MainActivity.this)){
+                    UserApiClient.getInstance().loginWithKakaoTalk(MainActivity.this, new Function2<OAuthToken, Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
+                            if(oAuthToken != null){
+                                //TBD
                             }
+                            if(throwable != null){
+                                //TBD
+                            }
+                            updateKakaoLoginUi();
                             return null;
-                        });
-                    }
-                    return null;
-                });
-
+                        }
+                    });
+                }
+                else{
+                    UserApiClient.getInstance().loginWithKakaoAccount(MainActivity.this, new Function2<OAuthToken, Throwable, Unit>() {
+                        @Override
+                        public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
+                            if(oAuthToken != null){
+                                //TBD
+                            }
+                            if(throwable != null){
+                                //TBD
+                            }
+                            updateKakaoLoginUi();
+                            return null;
+                        }
+                    });
+                }
             }
         });
 
-        /*
-        btn_login_out.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                UserApiClient.getInstance().logout(error -> {
-                    if (error != null) {
-                        Log.e(TAG, "로그아웃 실패, SDK에서 토큰 삭제됨", error);
-                    }else{
-                        Log.e(TAG, "로그아웃 성공, SDK에서 토큰 삭제됨");
+            public void onClick(View view) {
+                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                    @Override
+                    public Unit invoke(Throwable throwable) {
+                        updateKakaoLoginUi();
+                        return null;
                     }
-                    return null;
                 });
             }
-        }); */
-        //테스트용으로 만듦!!!
-        btn_login_out.setOnClickListener(view -> {
-            startActivity(new Intent(this, HomeActivity.class));
         });
 
 
@@ -142,24 +143,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // 키해시 얻기
-    public String getKeyHash(){
-        try{
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(),PackageManager.GET_SIGNATURES);
-            if(packageInfo == null) return null;
-            for(Signature signature: packageInfo.signatures){
-                try{
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    return android.util.Base64.encodeToString(md.digest(), Base64.NO_WRAP);
-                }catch (NoSuchAlgorithmException e){
-                    Log.w("getKeyHash", "Unable to get MessageDigest. signature="+signature, e);
+    private void updateKakaoLoginUi(){
+        UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
+            @Override
+            public Unit invoke(User user, Throwable throwable) {
+                if(user != null) {
+
+                    nickName.setText(user.getKakaoAccount().getProfile().getNickname());
+
+                    loginButton.setVisibility(View.GONE);
+                    logoutButton.setVisibility(View.VISIBLE);
+                } else {
+
+                    loginButton.setVisibility(View.VISIBLE);
+                    logoutButton.setVisibility(View.GONE);
                 }
+                return null;
             }
-        }catch(PackageManager.NameNotFoundException e){
-            Log.w("getPackageInfo", "Unable to getPackageInfo");
-        }
-        return null;
+        });
     }
 
     //firebase 데이터 읽고 쓰기
