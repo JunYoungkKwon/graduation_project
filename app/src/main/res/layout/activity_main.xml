@@ -16,34 +16,29 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
         <TextView
-            android:id="@+id/textview"
+            android:id="@+id/nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="kakao 로그인"
-            android:textStyle="bold"
-            />
-        <ImageButton
-            android:id="@+id/btn_login"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/kakao_login_medium_narrow"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="kakao 로그아웃"
-            android:textStyle="bold"
-            />
-        <ImageButton
-            android:id="@+id/btn_login_out"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/kakao_login_medium_narrow"
             />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/kakao_login_medium_wide"/>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="logout"
+        android:visibility="gone"/>
 
 </LinearLayout>
