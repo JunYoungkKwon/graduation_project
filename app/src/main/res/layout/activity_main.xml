@@ -16,7 +16,6 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
-<<<<<<< HEAD
         <EditText
             android:id="@+id/name"
             android:layout_width="200dp"
@@ -58,12 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"/>
-=======
+
         <ImageView
             android:id="@+id/profile"
             android:layout_width="200dp"
             android:layout_height="200dp" />
->>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 
         <TextView
             android:id="@+id/nickname"

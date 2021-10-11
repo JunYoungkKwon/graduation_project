@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,39 +16,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-=======
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.kakao.sdk.auth.model.OAuthToken;
-import com.kakao.sdk.user.UserApi;
->>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
-<<<<<<< HEAD
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-=======
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
->>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
     private DatabaseReference mDatabase;
     Button save, read;
     EditText email, name, id;
     TextView data;
     int i = 1; //pk
 
-=======
     private View loginButton, logoutButton;
     private TextView nickName;
->>>>>>> 272cfc67a000712f296dac00b3c6fb1dfa891070
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
