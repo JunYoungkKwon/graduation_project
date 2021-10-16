@@ -37,14 +37,9 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
   private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
   private static final float TEXT_SIZE_DIP = 10;
   private Bitmap rgbFrameBitmap = null;
-  private long lastProcessingTimeMs;
   private Integer sensorOrientation;
   private Classifier classifier;
   private BorderedText borderedText;
-  /** Input image size of the model along x axis. */
-  private int imageSizeX;
-  /** Input image size of the model along y axis. */
-  private int imageSizeY;
 
   @Override
   protected int getLayoutId() {
@@ -79,7 +74,6 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
   @Override
   protected void processImage() {
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
-    final int cropSize = Math.min(previewWidth, previewHeight);
 
     runInBackground(
         new Runnable() {
@@ -89,7 +83,6 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
               final long startTime = SystemClock.uptimeMillis();
               final List<Classifier.Recognition> results =
                   classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
-              lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
 
               if(timeForInference + 3000 < currentTimeMillis()){
                 timeForInference = currentTimeMillis();
@@ -98,11 +91,6 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
                           @Override
                           public void run() {
                             showResultsInBottomSheet(results);
-                            //showFrameInfo(previewWidth + "x" + previewHeight);
-                            //showCropInfo(imageSizeX + "x" + imageSizeY);
-                            //showCameraResolution(cropSize + "x" + cropSize);
-                            //showRotationInfo(String.valueOf(sensorOrientation));
-                            //showInference(lastProcessingTimeMs + "ms");
                           }
                         });
               }
@@ -133,9 +121,5 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
       classifier = Classifier.create(this, device, numThreads);
     } catch (IOException e) {
     }
-
-    // Updates the input image size.
-    imageSizeX = classifier.getImageSizeX();
-    imageSizeY = classifier.getImageSizeY();
   }
 }

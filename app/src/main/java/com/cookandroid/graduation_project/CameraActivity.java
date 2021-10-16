@@ -41,7 +41,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.UiThread;
@@ -74,11 +73,6 @@ public abstract class CameraActivity extends AppCompatActivity
   private int yRowStride;
   private Runnable postInferenceCallback;
   private Runnable imageConverter;
-  protected TextView frameValueTextView,
-      cropValueTextView,
-      cameraResolutionTextView,
-      rotationTextView,
-      inferenceTimeTextView;
 
   public long timeForInference;
 
@@ -420,76 +414,15 @@ public abstract class CameraActivity extends AppCompatActivity
     if (results != null) {
       Recognition recognition = results.get(0);
       Toast.makeText(this.getApplicationContext(), recognition.getTitle(), Toast.LENGTH_SHORT).show();
-      /*
-      Recognition recognition = results.get(0);
-      if (recognition != null) {
-        if (recognition.getTitle() != null) recognitionTextView.setText(recognition.getTitle());
-        if (recognition.getConfidence() != null)
-          recognitionValueTextView.setText(
-              String.format("%.2f", (100 * recognition.getConfidence())) + "%");
-      }
-
-      Recognition recognition1 = results.get(1);
-      if (recognition1 != null) {
-        if (recognition1.getTitle() != null) recognition1TextView.setText(recognition1.getTitle());
-        if (recognition1.getConfidence() != null)
-          recognition1ValueTextView.setText(
-              String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
-      }
-
-      
-      Recognition recognition2 = results.get(2);
-      if (recognition2 != null) {
-        if (recognition2.getTitle() != null) recognition2TextView.setText(recognition2.getTitle());
-        if (recognition2.getConfidence() != null)
-          recognition2ValueTextView.setText(
-              String.format("%.2f", (100 * recognition2.getConfidence())) + "%");
-      }
-       */
     }
-  }
-
-  protected void showFrameInfo(String frameInfo) {
-    frameValueTextView.setText(frameInfo);
-  }
-
-  protected void showCropInfo(String cropInfo) {
-    cropValueTextView.setText(cropInfo);
-  }
-
-  protected void showCameraResolution(String cameraInfo) {
-    cameraResolutionTextView.setText(cameraInfo);
-  }
-
-  protected void showRotationInfo(String rotation) {
-    rotationTextView.setText(rotation);
-  }
-
-  protected void showInference(String inferenceTime) {
-    inferenceTimeTextView.setText(inferenceTime);
   }
 
   protected Device getDevice() {
     return device;
   }
 
-  private void setDevice(Device device) {
-    if (this.device != device) {
-      this.device = device;
-      final boolean threadsEnabled = device == Device.CPU;
-      onInferenceConfigurationChanged();
-    }
-  }
-
   protected int getNumThreads() {
     return numThreads;
-  }
-
-  private void setNumThreads(int numThreads) {
-    if (this.numThreads != numThreads) {
-      this.numThreads = numThreads;
-      onInferenceConfigurationChanged();
-    }
   }
 
   protected abstract void processImage();
