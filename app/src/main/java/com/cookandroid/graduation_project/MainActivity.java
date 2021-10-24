@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     TextView data;
+    int i = 1; //pk
 
     private View loginButton;
 
@@ -88,11 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 result.put("name", user.getKakaoAccount().getProfile().getNickname()); //키, 값
                 result.put("email", user.getKakaoAccount().getEmail());
 
-                Log.d("test1", user.getKakaoAccount().getProfile().getNickname());
-
-                mDatabase.child("users").push().setValue(result);
-
-                //writeUser(Integer.toString(i++), user.getKakaoAccount().getProfile().getNickname(), user.getKakaoAccount().getEmail());
+                writeUser(Integer.toString(i++), user.getKakaoAccount().getProfile().getNickname(), user.getKakaoAccount().getEmail());
 
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 intent.putExtra("name", user.getKakaoAccount().getProfile().getNickname());
@@ -110,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         UserData user =  new UserData(name,email);
 
         //데이터 저장
-        mDatabase.child("users").push().setValue(user)
+        mDatabase.child("users").child(userId).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() { //데이터베이스에 넘어간 이후 처리
                     @Override
                     public void onSuccess(Void aVoid) {

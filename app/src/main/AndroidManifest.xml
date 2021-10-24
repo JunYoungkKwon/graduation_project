@@ -25,11 +25,10 @@
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <data android:host="oauth" android:scheme="kakaod7cce7b9b862966d17b63bae9ad6b109"/>
             </intent-filter>
+
         </activity>
 
         <activity android:name="com.cookandroid.graduation_project.ClassifierActivity"></activity>
