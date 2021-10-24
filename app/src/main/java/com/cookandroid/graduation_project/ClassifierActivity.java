@@ -23,6 +23,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 
@@ -76,28 +77,29 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
 
     runInBackground(
-        new Runnable() {
-          @Override
-          public void run() {
-            if (classifier != null) {
-              final long startTime = SystemClock.uptimeMillis();
-              final List<Classifier.Recognition> results =
-                  classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
+            new Runnable() {
+              @Override
+              public void run() {
+                if (classifier != null) {
+                  final long startTime = SystemClock.uptimeMillis();
+                  Log.d("min", "1");
+                  final List<Classifier.Recognition> results =
+                          classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
 
-              if(timeForInference + 3000 < currentTimeMillis()){
-                timeForInference = currentTimeMillis();
-                runOnUiThread(
-                        new Runnable() {
-                          @Override
-                          public void run() {
-                            showResultsInBottomSheet(results);
-                          }
-                        });
+                  if(timeForInference + 3000 < currentTimeMillis()){
+                    timeForInference = currentTimeMillis();
+                    runOnUiThread(
+                            new Runnable() {
+                              @Override
+                              public void run() {
+                                showResultsInBottomSheet(results);
+                              }
+                            });
+                  }
+                }
+                readyForNextImage();
               }
-            }
-            readyForNextImage();
-          }
-        });
+            });
   }
 
   @Override

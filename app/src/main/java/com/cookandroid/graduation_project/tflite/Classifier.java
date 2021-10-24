@@ -97,7 +97,7 @@ public abstract class Classifier {
    * @return A classifier with the desired configuration.
    */
   public static Classifier create(Activity activity, Device device, int numThreads)
-      throws IOException {
+          throws IOException {
 
     //return new ClassifierFloatMobileNet(activity, device, numThreads);
     return new ClassifierQuantizedMobileNet(activity, device, numThreads);
@@ -123,7 +123,7 @@ public abstract class Classifier {
     private RectF location;
 
     public Recognition(
-        final String id, final String title, final Float confidence, final RectF location) {
+            final String id, final String title, final Float confidence, final RectF location) {
       this.id = id;
       this.title = title;
       this.confidence = confidence;
@@ -200,7 +200,7 @@ public abstract class Classifier {
     DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
     int probabilityTensorIndex = 0;
     int[] probabilityShape =
-        tflite.getOutputTensor(probabilityTensorIndex).shape(); // {1, NUM_CLASSES}
+            tflite.getOutputTensor(probabilityTensorIndex).shape(); // {1, NUM_CLASSES}
     DataType probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
 
     // Creates the input tensor.
@@ -293,15 +293,15 @@ public abstract class Classifier {
   private static List<Recognition> getTopKProbability(Map<String, Float> labelProb) {
     // Find the best classifications.
     PriorityQueue<Recognition> pq =
-        new PriorityQueue<>(
-            MAX_RESULTS,
-            new Comparator<Recognition>() {
-              @Override
-              public int compare(Recognition lhs, Recognition rhs) {
-                // Intentionally reversed to put high confidence at the head of the queue.
-                return Float.compare(rhs.getConfidence(), lhs.getConfidence());
-              }
-            });
+            new PriorityQueue<>(
+                    MAX_RESULTS,
+                    new Comparator<Recognition>() {
+                      @Override
+                      public int compare(Recognition lhs, Recognition rhs) {
+                        // Intentionally reversed to put high confidence at the head of the queue.
+                        return Float.compare(rhs.getConfidence(), lhs.getConfidence());
+                      }
+                    });
 
     for (Map.Entry<String, Float> entry : labelProb.entrySet()) {
       pq.add(new Recognition("" + entry.getKey(), entry.getKey(), entry.getValue(), null));
