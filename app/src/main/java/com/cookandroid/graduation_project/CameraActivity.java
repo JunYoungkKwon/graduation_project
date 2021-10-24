@@ -56,8 +56,11 @@ import com.cookandroid.graduation_project.tflite.Classifier.Device;
 import com.cookandroid.graduation_project.tflite.Classifier.Recognition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.nio.ByteBuffer;
 import java.text.DateFormat;
@@ -453,22 +456,6 @@ public abstract class CameraActivity extends AppCompatActivity
     result.put("email", "pmy0237@kakao.com");
 
     writeUser(Integer.toString(i++), time, "test@naver.com");
-
-//    mDatabase.child("reports").push().setValue(result)
-//            .addOnSuccessListener(new OnSuccessListener<Void>() { //데이터베이스에 넘어간 이후 처리
-//              @Override
-//              public void onSuccess(Void aVoid) {
-//                Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
-//              }
-//            })
-//            .addOnFailureListener(new OnFailureListener() {
-//              @Override
-//              public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
-//              }
-//            });
-
-
   }
 
 
@@ -522,5 +509,21 @@ public abstract class CameraActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
               }
             });
+  }
+
+  private void readUser(String userId) {
+    //데이터 읽기
+    mDatabase.child("reports").child(userId).addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+        ReportData user = snapshot.getValue(ReportData.class);
+        //data.setText("시간: " + user.time + " 이메일: " + user.email);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
+        Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
+      }
+    });
   }
 }
