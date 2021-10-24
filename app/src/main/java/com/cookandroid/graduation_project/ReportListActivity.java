@@ -50,6 +50,7 @@ public class ReportListActivity extends AppCompatActivity {
             public TextView locationText;
             public TextView progressText;
 
+
             public ViewHolder(View view) {
                 super(view);
 //                timeText = (TextView) view.findViewById(R.id.);

@@ -25,6 +25,7 @@ public class UserData {
 
 
 
+
     public String getName() {
         return name;
     }
@@ -39,7 +40,6 @@ public class UserData {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", email='" + email +
-                '}';
+                ", email='" + email + '}';
     }
 }

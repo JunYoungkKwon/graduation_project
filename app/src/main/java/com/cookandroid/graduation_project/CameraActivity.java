@@ -21,6 +21,7 @@ import static java.lang.System.currentTimeMillis;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -43,15 +44,31 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 import com.cookandroid.graduation_project.env.ImageUtils;
 import com.cookandroid.graduation_project.tflite.Classifier.Device;
 import com.cookandroid.graduation_project.tflite.Classifier.Recognition;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.nio.ByteBuffer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public abstract class CameraActivity extends AppCompatActivity
     implements OnImageAvailableListener,
@@ -78,6 +95,11 @@ public abstract class CameraActivity extends AppCompatActivity
 
   private Device device = Device.CPU;
   private int numThreads = -1;
+  private String email;
+
+  private static DatabaseReference mDatabase;
+  DateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+  int i = 1;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -85,6 +107,12 @@ public abstract class CameraActivity extends AppCompatActivity
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     setContentView(R.layout.tfe_ic_activity_camera);
+
+    Intent intent1 = getIntent();
+
+    email = intent1.getStringExtra("email");
+
+    mDatabase = FirebaseDatabase.getInstance().getReference();
 
     if (hasPermission()) {
       setFragment();
@@ -168,6 +196,7 @@ public abstract class CameraActivity extends AppCompatActivity
       if (image == null) {
         return;
       }
+
 
       if (isProcessingFrame) {
         image.close();
@@ -264,6 +293,7 @@ public abstract class CameraActivity extends AppCompatActivity
   @Override
   public void onRequestPermissionsResult(
       final int requestCode, final String[] permissions, final int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == PERMISSIONS_REQUEST) {
       if (allPermissionsGranted(grantResults)) {
         setFragment();
@@ -415,7 +445,20 @@ public abstract class CameraActivity extends AppCompatActivity
       Recognition recognition = results.get(0);
       Toast.makeText(this.getApplicationContext(), recognition.getTitle(), Toast.LENGTH_SHORT).show();
     }
+
+    long now = System.currentTimeMillis();
+    Date date = new Date(now);
+    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+    String time = simpleDateFormat.format(date);
+
+    HashMap result = new HashMap<>();
+    result.put("time", time);
+    result.put("email", "pmy0237@kakao.com");
+
+    writeUser(Integer.toString(i++), time, "test@naver.com");
   }
+
 
   protected Device getDevice() {
     return device;
@@ -448,5 +491,40 @@ public abstract class CameraActivity extends AppCompatActivity
   @Override
   public void onNothingSelected(AdapterView<?> parent) {
     // Do nothing.
+  }
+
+  private void writeUser(String userId, String time, String email) {
+    ReportData user =  new ReportData(time, email);
+
+    //데이터 저장
+    mDatabase.child("reports").child(userId).setValue(user)
+            .addOnSuccessListener(new OnSuccessListener<Void>() { //데이터베이스에 넘어간 이후 처리
+              @Override
+              public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(),"저장을 완료했습니다", Toast.LENGTH_LONG).show();
+              }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+              @Override
+              public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),"저장에 실패했습니다" , Toast.LENGTH_LONG).show();
+              }
+            });
+  }
+
+  private void readUser(String userId) {
+    //데이터 읽기
+    mDatabase.child("reports").child(userId).addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+        ReportData user = snapshot.getValue(ReportData.class);
+        //data.setText("시간: " + user.time + " 이메일: " + user.email);
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
+        Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
+      }
+    });
   }
 }

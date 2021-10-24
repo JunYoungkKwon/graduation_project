@@ -2,11 +2,19 @@ package com.cookandroid.graduation_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.kakao.sdk.common.util.Utility;
+
+
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,9 +28,15 @@ import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
+
+
+import android.content.pm.Signature;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     int i = 1; //pk
 
     private View loginButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         //firebase test 부분
         mDatabase = FirebaseDatabase.getInstance().getReference(); //DatabaseReference의 인스턴스
     }
+
 
     private void updateKakaoLoginUi(){
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
@@ -136,4 +153,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">graduation_project</string>
     <string name="tfe_ic_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
-    <string name="kakao_app_key">앱 키</string>
+    <string name="kakao_app_key">d7cce7b9b862966d17b63bae9ad6b109</string>
 </resources>
