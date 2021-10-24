@@ -449,4 +449,5 @@ public abstract class CameraActivity extends AppCompatActivity
   public void onNothingSelected(AdapterView<?> parent) {
     // Do nothing.
   }
+
 }
