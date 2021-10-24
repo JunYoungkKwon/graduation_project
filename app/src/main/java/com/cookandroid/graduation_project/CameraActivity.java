@@ -197,6 +197,7 @@ public abstract class CameraActivity extends AppCompatActivity
         return;
       }
 
+
       if (isProcessingFrame) {
         image.close();
         return;
