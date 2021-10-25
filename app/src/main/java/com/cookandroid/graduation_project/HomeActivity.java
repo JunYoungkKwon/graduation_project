@@ -30,9 +30,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
         recogBtn.setOnClickListener(view -> {
-            Intent intent1 = new Intent(getApplicationContext(), CameraActivity.class);
-            intent1.putExtra("name", name);
-            intent1.putExtra("email", email);
             startActivity(new Intent(this, ClassifierActivity.class));
         });
 
