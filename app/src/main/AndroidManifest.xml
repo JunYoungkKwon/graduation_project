@@ -26,12 +26,6 @@
             android:value="@string/kakao_app_key" />
 
         <activity android:name=".MainActivity" android:exported="true">
-
-        </activity>
-
-        <activity android:name="com.cookandroid.graduation_project.ClassifierActivity"></activity>
-        <activity android:name="com.cookandroid.graduation_project.CovidInfoActivity"></activity>
-        <activity android:name="com.cookandroid.graduation_project.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +33,20 @@
 
                 <data android:host="oauth" android:scheme="kakaod7cce7b9b862966d17b63bae9ad6b109"/>
             </intent-filter>
+
+
         </activity>
-        <activity android:name="com.cookandroid.graduation_project.ReportListActivity"></activity>
+
+        <activity android:name="com.cookandroid.graduation_project.ClassifierActivity"></activity>
+        <activity android:name="com.cookandroid.graduation_project.CovidInfoActivity"></activity>
+        <activity android:name="com.cookandroid.graduation_project.HomeActivity">
+
+
+        </activity>
+        <activity android:name="com.cookandroid.graduation_project.ReportListActivity">
+
+
+        </activity>
         <activity android:name="com.cookandroid.graduation_project.MapActivity">
         </activity>
 

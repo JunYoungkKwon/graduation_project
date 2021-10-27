@@ -18,6 +18,7 @@ package com.cookandroid.graduation_project;
 
 import static java.lang.System.currentTimeMillis;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
@@ -40,6 +41,7 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
   private Integer sensorOrientation;
   private Classifier classifier;
   private BorderedText borderedText;
+  private String email;
 
   @Override
   protected int getLayoutId() {
@@ -69,6 +71,10 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
     sensorOrientation = rotation - getScreenOrientation();
 
     rgbFrameBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Config.ARGB_8888);
+
+    Intent intent2 = getIntent();
+    email = intent2.getStringExtra("email");
+
   }
 
 
@@ -92,7 +98,8 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
                         new Runnable() {
                           @Override
                           public void run() {
-                            showResultsInBottomSheet(results);
+
+                            showResultsInBottomSheet(results, email);
                           }
                         });
               }

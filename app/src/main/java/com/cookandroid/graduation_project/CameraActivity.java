@@ -109,7 +109,6 @@ public abstract class CameraActivity extends AppCompatActivity
   private String email;
   int reportNum = 1;
   boolean state = false;
-  String address;
 
   private GpsTracker gpsTracker;
 
@@ -459,7 +458,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   //minyong
   @UiThread
-  protected void showResultsInBottomSheet(List<Recognition> results) {
+  protected void showResultsInBottomSheet(List<Recognition> results,String email) {
     if (results != null) {
       Recognition recognition = results.get(0);
       Toast.makeText(this.getApplicationContext(), recognition.getTitle(), Toast.LENGTH_SHORT).show();
@@ -480,13 +479,12 @@ public abstract class CameraActivity extends AppCompatActivity
 
     HashMap result = new HashMap<>();
     result.put("time", time);
-    result.put("email", "pmy0237@kakao.com");
-    result.put("reportNum", reportNum);
-    result.put("reportNum", state);
+    result.put("email", email);
+    result.put("state", state);
     result.put("address", address);
 
 
-    writeUser(Integer.toString(i++), time, "test@naver.com", reportNum++, state, address);
+    writeUser(Integer.toString(i++), time, email, state, address);
   }
 
 
@@ -523,11 +521,11 @@ public abstract class CameraActivity extends AppCompatActivity
     // Do nothing.
   }
 
-  private void writeUser(String userId, String time, String email, int reportNum, boolean state, String address) {
-    ReportData user =  new ReportData(time, email, reportNum, state, address);
+  private void writeUser(String s, String time, String email, boolean state, String address) {
+    ReportData reportData =  new ReportData(time, email,  state, address);
 
     //데이터 저장
-    mDatabase.child("reports").child(userId).setValue(user)
+    mDatabase.child("reports").push().setValue(reportData)
             .addOnSuccessListener(new OnSuccessListener<Void>() { //데이터베이스에 넘어간 이후 처리
               @Override
               public void onSuccess(Void aVoid) {
@@ -542,21 +540,6 @@ public abstract class CameraActivity extends AppCompatActivity
             });
   }
 
-  private void readUser(String userId) {
-    //데이터 읽기
-    mDatabase.child("reports").child(userId).addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(@NonNull DataSnapshot snapshot) {
-        ReportData user = snapshot.getValue(ReportData.class);
-        //data.setText("시간: " + user.time + " 이메일: " + user.email);
-      }
-
-      @Override
-      public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
-        Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
-      }
-    });
-  }
 
   @Override
   public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {

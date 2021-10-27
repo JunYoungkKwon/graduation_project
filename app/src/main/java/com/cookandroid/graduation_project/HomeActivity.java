@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private String name, email;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +18,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        name = intent.getStringExtra("name");
         email = intent.getStringExtra("email");
-
-        Log.d("minyong", name+","+email);
 
         Button recogBtn = findViewById(R.id.home_mask_recog_btn);
         Button covidBtn = findViewById(R.id.home_covid_info_btn);
@@ -30,7 +27,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
         recogBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, ClassifierActivity.class));
+            Intent intent2 = new Intent(getApplicationContext(), ClassifierActivity.class);
+            intent2.putExtra("email", email);
+            startActivity(intent2);
         });
 
         covidBtn.setOnClickListener(view -> {
@@ -38,7 +37,9 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         reportBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, ReportListActivity.class));
+            Intent intent1 = new Intent(getApplicationContext(), ReportListActivity.class);
+            intent1.putExtra("email", email);
+            startActivity(intent1);
         });
 
     }

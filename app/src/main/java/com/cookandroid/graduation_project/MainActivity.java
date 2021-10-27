@@ -138,20 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void readUser(String userId) {
-        //데이터 읽기
-        mDatabase.child("users").child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserData user = snapshot.getValue(UserData.class);
-                data.setText("이름: " + user.name + " 이메일: " + user.email);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
-                Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
 }
