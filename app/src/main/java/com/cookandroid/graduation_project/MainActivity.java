@@ -2,19 +2,11 @@ package com.cookandroid.graduation_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.kakao.sdk.common.util.Utility;
-
-
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,15 +20,9 @@ import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
-
-
-import android.content.pm.Signature;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     int i = 1; //pk
 
     private View loginButton;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); //DatabaseReference의 인스턴스
     }
 
-
     private void updateKakaoLoginUi(){
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
@@ -138,6 +121,19 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void readUser(String userId) {
+        //데이터 읽기
+        mDatabase.child("users").child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserData user = snapshot.getValue(UserData.class);
+                data.setText("이름: " + user.name + " 이메일: " + user.email);
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { //참조에 액세스 할 수 없을 때 호출
+                Toast.makeText(getApplicationContext(),"데이터를 가져오는데 실패했습니다" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

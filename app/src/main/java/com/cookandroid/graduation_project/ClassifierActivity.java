@@ -24,6 +24,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 
@@ -102,11 +103,11 @@ public class ClassifierActivity extends com.cookandroid.graduation_project.Camer
                             showResultsInBottomSheet(results, email);
                           }
                         });
+                  }
+                }
+                readyForNextImage();
               }
-            }
-            readyForNextImage();
-          }
-        });
+            });
   }
 
   @Override

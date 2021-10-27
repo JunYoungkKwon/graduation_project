@@ -4,8 +4,9 @@ buildscript {
         // Check that you have the following line (if not, add it):
         google()
         mavenCentral()
-        maven() { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
-
+        maven() {
+            url 'https://devrepo.kakao.com/nexus/content/groups/public/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.3'
@@ -19,7 +20,6 @@ allprojects {
     repositories {
         // Check that you have the following line (if not, add it):
         //google()  // Google's Maven repository
-
 
 
     }

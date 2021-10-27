@@ -82,7 +82,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public abstract class CameraActivity extends AppCompatActivity
-    implements OnImageAvailableListener,
+        implements OnImageAvailableListener,
         Camera.PreviewCallback,
         View.OnClickListener,
         AdapterView.OnItemSelectedListener {
@@ -192,21 +192,21 @@ public abstract class CameraActivity extends AppCompatActivity
     yRowStride = previewWidth;
 
     imageConverter =
-        new Runnable() {
-          @Override
-          public void run() {
-            ImageUtils.convertYUV420SPToARGB8888(bytes, previewWidth, previewHeight, rgbBytes);
-          }
-        };
+            new Runnable() {
+              @Override
+              public void run() {
+                ImageUtils.convertYUV420SPToARGB8888(bytes, previewWidth, previewHeight, rgbBytes);
+              }
+            };
 
     postInferenceCallback =
-        new Runnable() {
-          @Override
-          public void run() {
-            camera.addCallbackBuffer(bytes);
-            isProcessingFrame = false;
-          }
-        };
+            new Runnable() {
+              @Override
+              public void run() {
+                camera.addCallbackBuffer(bytes);
+                isProcessingFrame = false;
+              }
+            };
     processImage();
   }
 
@@ -321,8 +321,21 @@ public abstract class CameraActivity extends AppCompatActivity
     }
   }
 
-  private static boolean allPermissionsGranted(final int[] grandResults) {
-    for (int result : grandResults) {
+  @Override
+  public void onRequestPermissionsResult(
+          final int requestCode, final String[] permissions, final int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if (requestCode == PERMISSIONS_REQUEST) {
+      if (allPermissionsGranted(grantResults)) {
+        setFragment();
+      } else {
+        requestPermission();
+      }
+    }
+  }
+
+  private static boolean allPermissionsGranted(final int[] grantResults) {
+    for (int result : grantResults) {
       if (result != PackageManager.PERMISSION_GRANTED) {
         return false;
       }
@@ -345,7 +358,7 @@ public abstract class CameraActivity extends AppCompatActivity
                 CameraActivity.this,
                 "Camera permission is required for this demo",
                 Toast.LENGTH_LONG)
-            .show();
+                .show();
       }
       requestPermissions(new String[] {PERMISSION_CAMERA}, PERMISSIONS_REQUEST);
     }
@@ -353,7 +366,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   // Returns true if the device supports the required hardware level, or better.
   private boolean isHardwareLevelSupported(
-      CameraCharacteristics characteristics, int requiredLevel) {
+          CameraCharacteristics characteristics, int requiredLevel) {
     int deviceLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
     if (deviceLevel == CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY) {
       return requiredLevel == deviceLevel;
@@ -375,7 +388,7 @@ public abstract class CameraActivity extends AppCompatActivity
         }
 
         final StreamConfigurationMap map =
-            characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
         if (map == null) {
           continue;
@@ -385,9 +398,9 @@ public abstract class CameraActivity extends AppCompatActivity
         // This should help with legacy situations where using the camera2 API causes
         // distorted or otherwise broken previews.
         useCamera2API =
-            (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
-                || isHardwareLevelSupported(
-                    characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
+                (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
+                        || isHardwareLevelSupported(
+                        characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
         return cameraId;
       }
     } catch (CameraAccessException e) {
@@ -402,24 +415,24 @@ public abstract class CameraActivity extends AppCompatActivity
     Fragment fragment;
     if (useCamera2API) {
       CameraConnectionFragment camera2Fragment =
-          CameraConnectionFragment.newInstance(
-              new CameraConnectionFragment.ConnectionCallback() {
-                @Override
-                public void onPreviewSizeChosen(final Size size, final int rotation) {
-                  previewHeight = size.getHeight();
-                  previewWidth = size.getWidth();
-                  CameraActivity.this.onPreviewSizeChosen(size, rotation);
-                }
-              },
-              this,
-              getLayoutId(),
-              getDesiredPreviewFrameSize());
+              CameraConnectionFragment.newInstance(
+                      new CameraConnectionFragment.ConnectionCallback() {
+                        @Override
+                        public void onPreviewSizeChosen(final Size size, final int rotation) {
+                          previewHeight = size.getHeight();
+                          previewWidth = size.getWidth();
+                          CameraActivity.this.onPreviewSizeChosen(size, rotation);
+                        }
+                      },
+                      this,
+                      getLayoutId(),
+                      getDesiredPreviewFrameSize());
 
       camera2Fragment.setCamera(cameraId);
       fragment = camera2Fragment;
     } else {
       fragment =
-          new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
+              new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
     }
 
     getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
